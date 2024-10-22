@@ -4,6 +4,8 @@
   width: 90%;
   margin-inline: auto;
   @include responsive(desktop) {
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
+    align-items: start;
   }
 }
