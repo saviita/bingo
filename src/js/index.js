@@ -18,6 +18,9 @@ let allowedNumbers = [];
 let intervalId;
 
 const printNumbers = () => {
+  allowedNumbers = []
+  cardNumbersElement.textContent = ''
+
   for (let i = 1; i < 100; i++) {
     allowedNumbers.push(i);
     const newNumber = document.createElement('span');
@@ -28,7 +31,7 @@ const printNumbers = () => {
   }
   cardNumbersElement.append(fragmentNumbers);
 };
-printNumbers();
+
 
 const generateUserNumbers = () => {
   if (userNumbers.length > 14) return;
@@ -55,7 +58,9 @@ const generatePcNumbers = () => {
 };
 
 const printUser = () => {
+  userNumbers = []
   generateUserNumbers();
+  cardUserElement.textContent = ''
 
   userNumbers.forEach(number => {
     const newNumber = document.createElement('span');
@@ -67,10 +72,12 @@ const printUser = () => {
 
   cardUserElement.append(fragmentUser);
 };
-printUser();
+
 
 const printPc = () => {
+  pcNumbers = []
   generatePcNumbers();
+  cardPcElement.textContent = ''
 
   pcNumbers.forEach(number => {
     const newNumber = document.createElement('span');
@@ -82,9 +89,12 @@ const printPc = () => {
 
   cardPcElement.append(fragmentPc);
 };
-printPc();
+
 
 const checkWinner = winNumber => {
+  resultPcElement.textContent = 'PC'
+  resultUserElement.textContent = 'YOU'
+
   if (userNumbers.includes(winNumber)) {
     let winPosition = userNumbers.indexOf(winNumber);
     cardUserElement.querySelector(`[data-number = '${winNumber}']`).classList.add('color-user');
@@ -112,10 +122,18 @@ const checkWinner = winNumber => {
   }
 };
 
-console.log(userNumbers, pcNumbers);
+
+printNumbers();
+printUser();
+printPc();
 
 const bingoNumber = () => {
+  printNumbers();
+  printUser();
+  printPc();
+
   intervalId = setInterval(() => {
+
     if (userNumbers.length === 0 || pcNumbers.length === 0) {
       return;
     }
@@ -131,7 +149,7 @@ const bingoNumber = () => {
     allowedNumbers.splice(randomPosition, 1);
 
     checkWinner(winNumber);
-  }, 10);
+  }, 100);
 };
 
 buttonElement.addEventListener('click', bingoNumber);
